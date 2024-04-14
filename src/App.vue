@@ -7,7 +7,7 @@
       <button class ="navbutton" type="button" @click="pagination(-25)">Back</button>
       <button class ="navbutton" type="button" @click="pagination(25)">Next</button>
 
-  <select name="country" class="country_select"  v-model="selected" @change="countryinfo" text="Select Country">
+  <select name="country" class="country_select"  v-model="selected" @change="countryinfo">
     <option  v-for="item of name_list" :key="item.id" >
       {{ item }}
     </option>
@@ -38,7 +38,7 @@ export default {
       name_list:[],
       index_name_list:[],
       start:0,
-      selected:"Choose a country"
+      selected:"Select Country"
     };
   },
   async created() {
@@ -83,8 +83,10 @@ export default {
       alert(country_string)
     }, 
     countryinfo() {
+      if (this.selected !== "Selected Country"){
       this.selected_country =  this.beautify(JSON.stringify(this.all_countries[this.index_name_list.indexOf(this.selected)]))
-      alert(this.selected_country)
+      alert(this.selected_country);
+    }
     },
     searchinfo(country) {
       console.log(country)     
@@ -99,6 +101,9 @@ export default {
       return obj
     }
   },
+  mounted() {
+  this.selected = this.items[0].value;
+}
 };
 </script>
 <style>
